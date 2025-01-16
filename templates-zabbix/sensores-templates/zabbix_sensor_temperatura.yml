@@ -1,0 +1,461 @@
+zabbix_export:
+  version: '6.0'
+  date: '2025-01-16T14:50:13Z'
+  groups:
+    -
+      uuid: 82b2354bb9df401a9708afa28e04101b
+      name: Termometro
+  templates:
+    -
+      uuid: d82b67087777420b971eae7fa2f88699
+      template: heat_by_Julio
+      name: 'Termômetro '
+      description: 'Template para capturar temperatura de sensores.'
+      groups:
+        -
+          name: Termometro
+      items:
+        -
+          uuid: 08d6d0aa3e7647a38dcbe4a0fa2f9d90
+          name: 'Umidade - U01'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.2'
+          key: 'sensor.humidade[U01]'
+          value_type: FLOAT
+          units: U
+          triggers:
+            -
+              uuid: 0c40856b80e0461a8f242417a6cca954
+              expression: 'last(/SMT/sensor.humidade[A01])=100'
+              name: 'Alerta de Umidade - U01'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: 55252b3ee3cd4a3ca9502868fa701fe8
+          name: ' Umidade - U02'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.3'
+          key: 'sensor.humidade[U02]'
+          value_type: FLOAT
+          units: U
+          triggers:
+            -
+              uuid: 28170c527a654e4cbc50043f1e0e337a
+              expression: 'last(/SMT/sensor.humidade[A04])=100'
+              name: 'Alerta de  Umidade - U02'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: 92fbdbe429024252a705bfe384ed7150
+          name: ' Umidade - U03'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.4'
+          key: 'sensor.humidade[U03]'
+          value_type: FLOAT
+          units: U
+          triggers:
+            -
+              uuid: 5814a72250d845c89f57f9e7a2c17e8d
+              expression: 'last(/SMT/sensor.humidade[A09])=100'
+              name: 'Alerta de  Umidade - U03'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: d630f85fb2c847d4999ef94edfad1870
+          name: ' Umidade - U04'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.5'
+          key: 'sensor.humidade[U04]'
+          value_type: FLOAT
+          units: U
+          triggers:
+            -
+              uuid: 1a6cccb1e965428f932fcddae76b27a1
+              expression: 'last(/SMT/sensor.humidade[B02])=100'
+              name: 'Alerta de  Umidade - U04'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: 69251d3bce2b4bb68d278d3eb482a113
+          name: ' Umidade - U05'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.7'
+          key: 'sensor.humidade[U05]'
+          value_type: FLOAT
+          units: U
+          triggers:
+            -
+              uuid: ac3deba0353c4c20acf080a8c913b5e9
+              expression: 'last(/SMT/sensor.humidade[B10])=100'
+              name: 'Alerta de  Umidade - U05'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: b87a7971fb5c4adbaf74b05f16a25376
+          name: ' Umidade - U06'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.8'
+          key: 'sensor.humidade[U06]'
+          value_type: FLOAT
+          units: U
+        -
+          uuid: a718449933564f318d913ea927a598cd
+          name: ' Umidade - U07'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.9'
+          key: 'sensor.humidade[U07]'
+          value_type: FLOAT
+          units: U
+        -
+          uuid: 77555152c69e44bc9c6462a939122304
+          name: ' Umidade - U08'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.10'
+          key: 'sensor.humidade[U08]'
+          value_type: FLOAT
+          units: U
+        -
+          uuid: b0e5af764bea4499b4a93835800dfcf5
+          name: ' Umidade - U09'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.11'
+          key: 'sensor.humidade[U09]'
+          value_type: FLOAT
+          units: U
+        -
+          uuid: 13e449254dc744feb079aa35c5f85868
+          name: ' Umidade - U10'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.6'
+          key: 'sensor.humidade[U10]'
+          value_type: FLOAT
+          units: U
+          triggers:
+            -
+              uuid: 02f699c167ed4ce68f45c50e9cf6fd8c
+              expression: 'last(/SMT/sensor.humidade[G01])<=100'
+              name: 'Alerta de  Umidade - U10'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: f13d279dc2f44b118e475373832e6098
+          name: 'Umidade - Master'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.1'
+          key: 'sensor.humidade[Master]'
+          value_type: FLOAT
+          units: U
+          triggers:
+            -
+              uuid: cbe7fe51ea6a4e1aaf9dc122189f9611
+              expression: 'last(/SMT/sensor.humidade[Master])=100'
+              name: 'Alerta de Umidade - Master'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: a3532dc26cdb4727829806ac6f31687b
+          name: ' Temperatura - T01'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.2'
+          key: 'sensor.temperature[T01]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: cd4e48c3203b48e8ade7f797bf6e8b74
+              expression: 'last(/SMT/sensor.temperature[T01])>=30'
+              name: 'Alerta de temperatura alta - T01'
+              event_name: 'Alerta de temperatura alta - T01'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: 85f6e681b3094bdd8e6af5350a1e277c
+          name: ' Temperatura - T02'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.3'
+          key: 'sensor.temperature[T02]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: 39fcc92af9054782b779832b242fea83
+              expression: 'last(/SMT/sensor.temperature[T02])>=30'
+              name: 'Alerta de temperatura alta -  T02'
+              event_name: 'Alerta de temperatura alta - T02'
+              priority: AVERAGE
+              description: 'Trigger de aumento de temperatura superior a 32º'
+              manual_close: 'YES'
+        -
+          uuid: 383007e4859946bea2be553dc29a9301
+          name: ' Temperatura - T03'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::smux'
+          key: 'sensor.temperature[T03]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: fb5975b80317443c81cd2b1fb172a6c4
+              expression: 'last(/SMT/sensor.temperature[T03])>=30'
+              name: 'Alerta de temperatura alta -  T03'
+              event_name: 'Alerta de temperatura alta -  T03'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: f67077620f8e4ee58fbb7201e84b5780
+          name: ' Temperatura - T04'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.5'
+          key: 'sensor.temperature[T04]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: 54636d6b15994039a73e57da6b637fdf
+              expression: 'last(/SMT/sensor.temperature[T04])>=30'
+              name: 'Alerta de temperatura alta -  T04'
+              event_name: 'Alerta de temperatura alta -  T04'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: f0cc1ccfd17c4af4af3559a6055754b4
+          name: ' Temperatura - T05'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.7'
+          key: 'sensor.temperature[T05]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: 66073c8c3c134615a2f68d0d563f2e31
+              expression: 'last(/SMT/sensor.temperature[T05])=30'
+              name: 'Alerta de temperatura alta -  T05'
+              event_name: 'Alerta de temperatura alta -  T05'
+              priority: AVERAGE
+        -
+          uuid: 3035b038f9a94c49bd2ac0056cc4800e
+          name: ' Temperatura - T06'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.8'
+          key: 'sensor.temperature[T06]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: 27d638e4595a44be9cf831b5b48f257c
+              expression: 'last(/SMT/sensor.temperature[T06])=30'
+              name: 'Alerta de temperatura alta -  T06'
+              event_name: 'Alerta de temperatura alta -  T06'
+              priority: AVERAGE
+              manual_close: 'YES'
+            -
+              uuid: cfc3781c93d045639f0d1c10cb53ffc9
+              expression: 'last(/SMT/sensor.temperature[C01])=100'
+              name: 'Alerta de  Umidade - U06'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: 0e0cde609eb94515a946b9d0ecfbfb1f
+          name: ' Temperatura - T07'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.9'
+          key: 'sensor.temperature[T07]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: fcfaac4a530649b489fb1b41873e83f2
+              expression: 'last(/SMT/sensor.temperature[T07])=30'
+              name: 'Alerta de temperatura alta -  T07'
+              event_name: 'Alerta de temperatura alta -  T07'
+              priority: AVERAGE
+            -
+              uuid: a4977375e6854782887e5d2e19063ca9
+              expression: 'last(/SMT/sensor.temperature[T07])=100'
+              name: 'Alerta de  Umidade - U07'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: 497d493f9cb94f639c45d05a66768717
+          name: ' Temperatura - T08'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.10'
+          key: 'sensor.temperature[T08]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: 7b8639fc07ac4e62a91e0aa1f4465ee3
+              expression: 'last(/SMT/sensor.temperature[T08])=30'
+              name: 'Alerta de temperatura alta -  T08'
+              event_name: 'Alerta de temperatura alta -  T08'
+              priority: AVERAGE
+              manual_close: 'YES'
+            -
+              uuid: c8ce82f421f249c599bae65b8c1a770c
+              expression: 'last(/SMT/sensor.temperature[T08])=100'
+              name: 'Alerta de  Umidade - U08'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: b83694560b0c438695a5f501857b14a4
+          name: ' Temperatura - T09'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.11'
+          key: 'sensor.temperature[T09]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: 7ef2f392d96e40dc9b1f72e32b257d03
+              expression: 'last(/SMT/sensor.temperature[T09])=30'
+              name: 'Alerta de temperatura alta -  T09'
+              event_name: 'Alerta de temperatura alta -  T09'
+              priority: AVERAGE
+              manual_close: 'YES'
+            -
+              uuid: f9ff1e4670ef43a4b048b9732bb7738e
+              expression: 'last(/SMT/sensor.temperature[T09])=100'
+              name: 'Alerta de  Umidade - U09'
+              event_name: 'Alerta de Umidade'
+              priority: AVERAGE
+              manual_close: 'YES'
+        -
+          uuid: bab84150a49046b9af6790db8c363c40
+          name: ' Temperatura - T10'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.6'
+          key: 'sensor.temperature[T10]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: 65f7ca42d7404a67bdadf808dd43a58a
+              expression: 'last(/SMT/sensor.temperature[T10])=30'
+              name: 'Alerta de temperatura alta -  T10'
+              event_name: 'Alerta de temperatura alta -  T10'
+              priority: AVERAGE
+        -
+          uuid: 420dbc72cee944ce88a50b434d20050c
+          name: 'Temperatura -  Master'
+          type: SNMP_AGENT
+          snmp_oid: 'SMUX-MIB::unix.1'
+          key: 'sensor.temperature[Master]'
+          value_type: FLOAT
+          units: C
+          triggers:
+            -
+              uuid: e79958b42140456395ffedbae0c37a87
+              expression: 'last(/SMT/sensor.temperature[Master])>=30'
+              name: 'Alerta de temperatura alta -Master'
+              event_name: 'Alerta de temperatura alta'
+              priority: AVERAGE
+      discovery_rules:
+        -
+          uuid: 4e421714b2b0474e83443f8052f2aafb
+          name: 'Sensor U01'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.5.1'
+          key: Sensor.Temperature
+        -
+          uuid: 4c44726eee844ddfbb521824a362f82f
+          name: Temperatura
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.3.2'
+          key: Temperature
+          delay: 30s
+          filter:
+            conditions:
+              -
+                macro: '{#SMTTEMPUNIT}'
+                value: ^C
+                formulaid: A
+          item_prototypes:
+            -
+              uuid: 893ee218b10449afa46a33c67fe3aba1
+              name: Temperature.enterprises.5.1
+              type: SNMP_AGENT
+              snmp_oid: 'SNMPv2-SMI::enterprises.5.1.{#SNMPINDEX}'
+              key: 'Temperature.enterprises.5.1[{#SMTTEMPNAME}]'
+              delay: 30s
+              value_type: FLOAT
+              units: '{#SMTTEMPUNIT}'
+              trigger_prototypes:
+                -
+                  uuid: c4c8d8ed7e3441eab23346e566d90419
+                  expression: 'last(/SMT/Temperature.enterprises.5.1[{#SMTTEMPNAME}])>35'
+                  name: Temperatura.enterprises.5.1
+                  priority: WARNING
+                  manual_close: 'YES'
+            -
+              uuid: df4e27e12b3f4f8ca52c6b12be17ef3b
+              name: Temperature.enterprises.5.2
+              type: SNMP_AGENT
+              snmp_oid: 'SNMPv2-SMI::enterprises.5.2.{#SNMPINDEX}'
+              key: 'Temperature.enterprises.5.2[{#SMTTEMPNAME}]'
+              delay: 30s
+              value_type: FLOAT
+              units: '{#SMTTEMPUNIT}'
+              trigger_prototypes:
+                -
+                  uuid: 75920c4f0f6248bea7548b31852946ae
+                  expression: 'last(/SMT/Temperature.enterprises.5.2[{#SMTTEMPNAME}])>35'
+                  name: Temperatura.enterprises.5.2
+                  priority: WARNING
+                  manual_close: 'YES'
+          graph_prototypes:
+            -
+              uuid: 9456d8c23289431193493608ed80a171
+              name: 'PoseidonTemperature {#SMTTEMPNAME}'
+              graph_items:
+                -
+                  color: FF4000
+                  calc_fnc: ALL
+                  item:
+                    host: SMT
+                    key: 'Temperature.enterprises.5.1[{#SMTTEMPNAME}]'
+                -
+                  sortorder: '1'
+                  color: '274482'
+                  calc_fnc: ALL
+                  item:
+                    host: SMT
+                    key: 'Temperature.enterprises.5.1[{#SMTTEMPNAME}]'
+      tags:
+        -
+          tag: SMT
+          value: SNMP
+      macros:
+        -
+          macro: '{$AGENT.TIMEOUT}'
+          value: 3m
+        -
+          macro: '{$CPU.UTIL.CRIT}'
+          value: '90'
+        -
+          macro: '{$IF.ERRORS.WARN}'
+          value: '2'
+        -
+          macro: '{$IFCONTROL}'
+          value: '1'
+  graphs:
+    -
+      uuid: 4d7d2e7ae85743e3bdb3b68db8e61bca
+      name: 'Sensor U01'
+      graph_items:
+        -
+          color: AFB42B
+          calc_fnc: ALL
+          item:
+            host: SMT
+            key: 'sensor.temperature[T01]'

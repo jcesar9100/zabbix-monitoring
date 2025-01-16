@@ -1,0 +1,793 @@
+zabbix_export:
+  version: '6.0'
+  date: '2025-01-16T14:18:03Z'
+  groups:
+    -
+      uuid: 2e67c62063124486ad7ab905f0973429
+      name: UPS
+  templates:
+    -
+      uuid: 8ee7c24d81514daf95651775b30d99d1
+      template: UPS_CMComandos
+      name: Nobreaks
+      groups:
+        -
+          name: UPS
+      items:
+        -
+          uuid: 5a9923c481f44edca3450167401c6bed
+          name: 'Capacidade das Baterias'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.74.0
+          key: upsCapacidadeDasBaterias
+          delay: 120s
+          units: '%'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: 57ad5a30b22c41f7a1d6c8672301e2e5
+              expression: last(/UPS_CMComandos/upsCapacidadeDasBaterias)<=50
+              name: 'Banco de baterias com capacidade baixa'
+              priority: AVERAGE
+            -
+              uuid: 4f049c87fcc74fe1baff82cc8b7e078f
+              expression: 'last(/UPS_CMComandos/upsCapacidadeDasBaterias)<=75 and last(/UPS_CMComandos/upsCapacidadeDasBaterias)>=51'
+              name: 'Banco de baterias com capacidade média'
+              priority: WARNING
+            -
+              uuid: ff04db74edc847a4a6fae7fb75fedec4
+              expression: last(/UPS_CMComandos/upsCapacidadeDasBaterias)=100
+              name: 'Banco de baterias com capacidade normal'
+              priority: INFO
+        -
+          uuid: 0633d8e447d342659408ab3c5a7bfdfc
+          name: 'Nível de Carga do Banco de Baterias'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.28.0
+          key: upsCargaDasBaterias
+          delay: 300s
+          units: '%'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 4745ff298369416da3711a656f38fb24
+          name: 'Carga de Saida na Linha 1'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.52.0
+          key: upsCargaLinha1Saida
+          delay: 60s
+          units: '%'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 04ea95b82ec94847959a6c538a3e739e
+          name: 'Carga de Saida na Linha 2'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.56.0
+          key: upsCargaLinha2Saida
+          delay: 60s
+          units: '%'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 1f6f1c9754a447b9b513434ec59bafff
+          name: 'Carga de Saida na Linha 3'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.60.0
+          key: upsCargaLinha3Saida
+          delay: 60s
+          units: '%'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 39f2afeef1714c7eb3c87d9e0d05e433
+          name: 'Carregamento das Baterias'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.25.0
+          key: upsCarregamentoBaterias
+          delay: 120s
+          value_type: FLOAT
+          valuemap:
+            name: CarregamentoDasBaterias
+          triggers:
+            -
+              uuid: 29237a87b94c406b867dfd3a614e9f29
+              expression: last(/UPS_CMComandos/upsCarregamentoBaterias)=300
+              name: 'Baterias descarregando'
+              priority: AVERAGE
+            -
+              uuid: 5d6116410bb4413d98e71c8da1fb2f43
+              expression: last(/UPS_CMComandos/upsCarregamentoBaterias)=200
+              name: 'Baterias em repouso'
+              priority: INFO
+            -
+              uuid: f412742bb8a9499c83414ffd897b8959
+              expression: last(/UPS_CMComandos/upsCarregamentoBaterias)=0
+              name: 'Carregador de Baterais Flutuando'
+              priority: INFO
+            -
+              uuid: d8d68e1f493f4babb03f3d641b5009b7
+              expression: last(/UPS_CMComandos/upsCarregamentoBaterias)=100
+              name: 'Carregando de Baterais'
+              priority: INFO
+        -
+          uuid: e7221940e8c7493d90928e8a0106cd4a
+          name: 'Condição Atual do Banco de Baterias'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.23.0
+          key: upsCondicaoBaterias
+          delay: 300s
+          value_type: FLOAT
+          valuemap:
+            name: CondicaoDasBaterias
+          triggers:
+            -
+              uuid: 1d70b91d3f6740d38b61d470557d1af5
+              expression: last(/UPS_CMComandos/upsCondicaoBaterias)=100
+              name: 'Banco com baterias em meia vida'
+              priority: WARNING
+            -
+              uuid: e3f022ef9633497ebad6dedac4a67d2a
+              expression: last(/UPS_CMComandos/upsCondicaoBaterias)=0
+              name: 'Banco com baterias novas'
+              priority: INFO
+            -
+              uuid: 2d5a364ca34d4f0f9da08b34bb0c2f17
+              expression: last(/UPS_CMComandos/upsCondicaoBaterias)=200
+              name: 'Substituir banco de baterias'
+              priority: HIGH
+        -
+          uuid: 4160448081d346cda2dd6e54e99e0b64
+          name: 'Corrente Atual do Banco de Baterias'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.30.0
+          key: upsCorrenteDasBaterias
+          delay: 120s
+          units: A
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 4384f57f552c4a889c5c7dcfc17c47c7
+          name: 'Estado Atual do Banco de Baterias'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.24.0
+          key: upsEstadoBaterias
+          delay: 300s
+          valuemap:
+            name: EstadoDaBateria
+          triggers:
+            -
+              uuid: 47aac3f815d94da69e4045a7239effd6
+              expression: last(/UPS_CMComandos/upsEstadoBaterias)=0
+              name: 'Banco de baterias carregado'
+              priority: INFO
+            -
+              uuid: b9c6f5bf7dc44833aec491c4529e2a15
+              expression: last(/UPS_CMComandos/upsEstadoBaterias)=100
+              name: 'Banco de baterias com carga baixa'
+              priority: WARNING
+            -
+              uuid: 02c9419d2d1b4bc49ad80f980e8d0a40
+              expression: last(/UPS_CMComandos/upsEstadoBaterias)=200
+              name: 'Banco de baterias esgotado'
+              priority: HIGH
+        -
+          uuid: ecfff6e98b634c689e28a46d91b8a80b
+          name: 'Frequencia do ByPass'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.61.0
+          key: upsFrequenciaByPass
+          delay: 10s
+          value_type: FLOAT
+          units: '!Hz'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 01f297e9fc7f4fdda2e911c392728256
+          name: 'Frequencia de Entrada na Linha 1'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.34.0
+          key: upsFrequenciaLinha1Entrada
+          delay: 10s
+          value_type: FLOAT
+          units: '!Hz'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: ea12313c0dc74df7ab29d9c91c388aad
+              expression: last(/UPS_CMComandos/upsFrequenciaLinha1Entrada)<57
+              name: 'ENTRADA - Frequencia da Linha 1 abaixo do normal'
+              priority: WARNING
+            -
+              uuid: 736ad974afd74587a237cef72c0458d4
+              expression: last(/UPS_CMComandos/upsFrequenciaLinha1Entrada)>63
+              name: 'ENTRADA - Frequencia da Linha 1 acima do normal'
+              priority: WARNING
+            -
+              uuid: 7ab228ee6bbf40e698dc8f884e83c160
+              expression: 'last(/UPS_CMComandos/upsFrequenciaLinha1Entrada)>=57 or last(/UPS_CMComandos/upsFrequenciaLinha1Entrada)<=63'
+              name: 'ENTRADA - Frequencia da Linha 1 normal'
+              priority: INFO
+        -
+          uuid: 6332327b38cc42d2bc80db6526a29204
+          name: 'Frequencia de Entrada na Linha 2'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.38.0
+          key: upsFrequenciaLinha2Entrada
+          delay: 10s
+          value_type: FLOAT
+          units: '!Hz'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: 2af7184a829f40689fb167e4bd948b03
+              expression: last(/UPS_CMComandos/upsFrequenciaLinha2Entrada)<57
+              name: 'ENTRADA - Frequencia da Linha 2 abaixo do normal'
+              priority: WARNING
+            -
+              uuid: 4de9dd59f24c439997ce49318d173582
+              expression: last(/UPS_CMComandos/upsFrequenciaLinha2Entrada)>63
+              name: 'ENTRADA - Frequencia da Linha 2 acima do normal'
+              priority: WARNING
+            -
+              uuid: 64f8348f0eb446c582db07bc9c88e4ac
+              expression: 'last(/UPS_CMComandos/upsFrequenciaLinha2Entrada)>=57 or last(/UPS_CMComandos/upsFrequenciaLinha2Entrada)<=63'
+              name: 'ENTRADA - Frequencia da Linha 2 normal'
+              priority: INFO
+        -
+          uuid: 4bc9a2e591da47669413cc9a0df8f5b7
+          name: 'Frequencia de Entrada na Linha 3'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.42.0
+          key: upsFrequenciaLinha3Entrada
+          delay: 10s
+          value_type: FLOAT
+          units: '!Hz'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: 5f3706f65e8240c9b24b86e084df58ac
+              expression: last(/UPS_CMComandos/upsFrequenciaLinha3Entrada)<57
+              name: 'ENTRADA - Frequencia da Linha 3 abaixo do normal'
+              priority: WARNING
+            -
+              uuid: 78003e8be46a436abae9eed825d957d6
+              expression: last(/UPS_CMComandos/upsFrequenciaLinha3Entrada)>63
+              name: 'ENTRADA - Frequencia da Linha 3 acima do normal'
+              priority: WARNING
+            -
+              uuid: b6491c026ca7486bbcfdbce85748e21e
+              expression: 'last(/UPS_CMComandos/upsFrequenciaLinha3Entrada)>=57 or last(/UPS_CMComandos/upsFrequenciaLinha3Entrada)<=63'
+              name: 'ENTRADA - Frequencia da Linha 3 normal'
+              priority: INFO
+        -
+          uuid: 24a156fb95594392858a29fd6b9a9583
+          name: 'Frequencia de Saida'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.47.0
+          key: upsFrequenciaSaida
+          delay: 10s
+          value_type: FLOAT
+          units: '!Hz'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: a68da4654a6348aa96584cfcf9a12879
+              expression: last(/UPS_CMComandos/upsFrequenciaSaida)<59
+              name: 'SAÍDA - Frequencia abaixo do normal'
+              priority: WARNING
+            -
+              uuid: 8b6ba5ced4ea4553a3a5bea1f56a208f
+              expression: last(/UPS_CMComandos/upsFrequenciaSaida)>61
+              name: 'SAÍDA - Frequencia acima do normal'
+              priority: WARNING
+            -
+              uuid: 9988b6ee3a6d423b9ed29d6149f33ed2
+              expression: 'last(/UPS_CMComandos/upsFrequenciaSaida)>=59 or last(/UPS_CMComandos/upsFrequenciaSaida)<=61'
+              name: 'SAÍDA - Frequencia normal'
+              priority: INFO
+        -
+          uuid: af59989e75954fccbb79f045ecb5742e
+          name: 'Potencia Total de Saida'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.73.0
+          key: upsIPotenciaTotalSaida
+          delay: 30s
+          value_type: FLOAT
+          units: W
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 807920a9a0174f29a806776912d33f85
+          name: 'Modo de Funcionamento da UPS'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.46.0
+          key: upsModoDeFuncionamento
+          delay: 1s
+          valuemap:
+            name: ModoOperacaoUPS
+          triggers:
+            -
+              uuid: 448d1ee3132b4f4a82439ef8ea1edef5
+              expression: last(/UPS_CMComandos/upsModoDeFuncionamento)=100
+              name: 'UPS em modo Bateria'
+              priority: AVERAGE
+            -
+              uuid: f7c2dd4c4b9b44cabf5574fa666c8809
+              expression: last(/UPS_CMComandos/upsModoDeFuncionamento)=400
+              name: 'UPS em modo Boost'
+              priority: AVERAGE
+            -
+              uuid: 8ad0689ce6b64dc9add8e3992d78bd59
+              expression: last(/UPS_CMComandos/upsModoDeFuncionamento)=200
+              name: 'UPS em modo ByPass'
+              priority: AVERAGE
+            -
+              uuid: a36656b529e5441bb1f9a93ea21b6bbd
+              expression: last(/UPS_CMComandos/upsModoDeFuncionamento)=500
+              name: 'UPS em modo Desconhecido'
+              priority: AVERAGE
+            -
+              uuid: 1607fe8cb65b4f92811f1a87645fe9d2
+              expression: last(/UPS_CMComandos/upsModoDeFuncionamento)=0
+              name: 'UPS em modo Normal'
+              priority: INFO
+            -
+              uuid: cc83f5ec49a342edb77f442b6f13c3f5
+              expression: last(/UPS_CMComandos/upsModoDeFuncionamento)=300
+              name: 'UPS em modo Reduzido'
+              priority: AVERAGE
+        -
+          uuid: 00ddc69b3aaf4db9a1b650c5d5b8d32c
+          name: 'Estado das Linhas de Entrada'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.33.0
+          key: upsNumLinhasEntradasNorm
+          delay: 1s
+          valuemap:
+            name: FasesDeEntrada
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 0130c5a0e93f4c2f8c37be607bd72584
+          name: 'Problema das Linhas de Entrada'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.32.0
+          key: upsNumLinhasEntradasProb
+          delay: 1s
+          valuemap:
+            name: FasesDeEntradaProb
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: a792ec9f17b047d4ab85e6cb0f160ec8
+              expression: last(/UPS_CMComandos/upsNumLinhasEntradasProb)=1
+              name: 'ENTRADA - Número de Fases com Problemas = 1'
+              priority: AVERAGE
+            -
+              uuid: ebd698c9d1494345bb2006cb72b0e99b
+              expression: last(/UPS_CMComandos/upsNumLinhasEntradasProb)=2
+              name: 'ENTRADA - Número de Fases com Problemas = 2'
+              priority: AVERAGE
+            -
+              uuid: f901f59ec2a945a8a20580d8b9493426
+              expression: last(/UPS_CMComandos/upsNumLinhasEntradasProb)=3
+              name: 'ENTRADA - Número de Fases com Problemas = 3'
+              priority: AVERAGE
+            -
+              uuid: 6a6c7cbdc24549a99d829fd69fb1cac5
+              expression: last(/UPS_CMComandos/upsNumLinhasEntradasProb)=0
+              name: 'ENTRADA - Números de Fases OK'
+              priority: INFO
+        -
+          uuid: 861068ca74e641239eb3d89d51822336
+          name: 'Temperatura da UPS'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.75.0
+          key: upsTemperatura
+          delay: 45s
+          units: °C
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: 417f03d4f2cf4f5e80c22a3f9fa92c9d
+              expression: last(/UPS_CMComandos/upsTemperatura)>=35
+              name: 'Temperatura da UPS maior ou igual à 35°C'
+              priority: WARNING
+            -
+              uuid: 73125eb0af8f425d8cdac4bab967cbba
+              expression: last(/UPS_CMComandos/upsTemperatura)<35
+              name: 'Temperatura da UPS normal'
+              priority: INFO
+        -
+          uuid: 084c400c165245a88b5cc2c745e33b7a
+          name: 'Tempo de Funcionamento em Modo Bateria'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.26.0
+          key: upsTempoEstimadoModoBat
+          delay: 10s
+          units: uptime
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+            -
+              type: MULTIPLIER
+              parameters:
+                - '60'
+          triggers:
+            -
+              uuid: 5f709d7c940c4a8d81f9b60f131f76ad
+              expression: last(/UPS_CMComandos/upsTempoEstimadoModoBat)<=15
+              name: 'Modo Bateria - 15 minutos restante'
+              priority: AVERAGE
+        -
+          uuid: 0647c3b8dc134564a1d9db981d57401d
+          name: 'Voltagem do Banco de Baterias'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.29.0
+          key: upsVoltagemDasBaterias
+          delay: 150s
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: aa9897f77b19406e90c15d8a8a3edd5e
+          name: 'Voltagem do ByPass - Linha 1'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.63.0
+          key: upsVoltagemLinha1ByPass
+          delay: 15s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 033fbd0366ec437fb5f6401ef11a3483
+          name: 'Voltagem de Entrada na Linha 1'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.35.0
+          key: upsVoltagemLinha1Entrada
+          delay: 10s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: b4b1c2720eee4fcdb5c1155edfde7e33
+              expression: last(/UPS_CMComandos/upsVoltagemLinha1Entrada)<=108
+              name: 'ENTRADA - Linha 1 com tensão abaixo do normal'
+              priority: WARNING
+            -
+              uuid: e832b539046f4e769b5aff29560295ef
+              expression: last(/UPS_CMComandos/upsVoltagemLinha1Entrada)>=146
+              name: 'ENTRADA - Linha 1 com tensão acima do normal'
+              priority: WARNING
+            -
+              uuid: b6b2d8e207bd4e749de80e856a3765af
+              expression: 'last(/UPS_CMComandos/upsVoltagemLinha1Entrada)<146 and last(/UPS_CMComandos/upsVoltagemLinha1Entrada)>108'
+              name: 'ENTRADA - Linha 1 com Tensão Normal'
+              priority: INFO
+        -
+          uuid: 1521c66c0eae460f80b6e2a10fc5a8fc
+          name: 'Voltagem de Saida na Linha 1'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.49.0
+          key: upsVoltagemLinha1Saida
+          delay: 15s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 71ec4c70c98d4708a3b55e0c01015eec
+          name: 'Voltagem do ByPass - Linha 2'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.66.0
+          key: upsVoltagemLinha2ByPass
+          delay: 15s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: ffe72aba4d6b480794c973051dd4c09f
+          name: 'Voltagem de Entrada na Linha 2'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.39.0
+          key: upsVoltagemLinha2Entrada
+          delay: 10s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: e9fafcb641b54382af2fc14f0409996a
+              expression: last(/UPS_CMComandos/upsVoltagemLinha2Entrada)<=108
+              name: 'ENTRADA - Linha 2 com tensão abaixo do normal'
+              priority: WARNING
+            -
+              uuid: 7e1be420694b478c94918f313ba54d37
+              expression: last(/UPS_CMComandos/upsVoltagemLinha2Entrada)>=146
+              name: 'ENTRADA - Linha 2 com tensão acima do normal'
+              priority: WARNING
+            -
+              uuid: ea3fcbb737ee4991b131037f797f5678
+              expression: 'last(/UPS_CMComandos/upsVoltagemLinha2Entrada)<146 and last(/UPS_CMComandos/upsVoltagemLinha2Entrada)>108'
+              name: 'ENTRADA - Linha 2 com Tensão Normal'
+              priority: INFO
+        -
+          uuid: 62e332911aaa459d99a120f7ac060705
+          name: 'Voltagem de Saida na Linha 2'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.53.0
+          key: upsVoltagemLinha2Saida
+          delay: 15s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: 160e04fc7df24f58ae971e9444c4dedd
+          name: 'Voltagem do ByPass - Linha 3'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.69.0
+          key: upsVoltagemLinha3ByPass
+          delay: 15s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+        -
+          uuid: ac188c193a7640c7978498f71e120170
+          name: 'Voltagem de Entrada na Linha 3'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.43.0
+          key: upsVoltagemLinha3Entrada
+          delay: 10s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          triggers:
+            -
+              uuid: 80cf8332e0ce4afea92ba249a91452d1
+              expression: last(/UPS_CMComandos/upsVoltagemLinha3Entrada)<=108
+              name: 'ENTRADA - Linha 3 com tensão abaixo do normal'
+              priority: WARNING
+            -
+              uuid: 886ce8dc16154e7792b89982193ae146
+              expression: last(/UPS_CMComandos/upsVoltagemLinha3Entrada)>=146
+              name: 'ENTRADA - Linha 3 com tensão acima do normal'
+              priority: WARNING
+            -
+              uuid: 67989c4064094e68bd83e0ec596b3564
+              expression: 'last(/UPS_CMComandos/upsVoltagemLinha3Entrada)<146 and last(/UPS_CMComandos/upsVoltagemLinha3Entrada)>108'
+              name: 'ENTRADA - Linha 3 com Tensão Normal'
+              priority: INFO
+        -
+          uuid: 04c25c5c13de429986ad0d7ac1c37604
+          name: 'Voltagem de Saida na Linha 3'
+          type: SNMP_AGENT
+          snmp_oid: iso.3.6.1.4.1.2350.1.1.1.57.0
+          key: upsVoltagemLinha3Saida
+          delay: 15s
+          value_type: FLOAT
+          units: V
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+      valuemaps:
+        -
+          uuid: bc5ab0c0651d463aa77027957bb7bc01
+          name: CarregamentoDasBaterias
+          mappings:
+            -
+              value: '0'
+              newvalue: Flutuando
+            -
+              value: '100'
+              newvalue: Carregando
+            -
+              value: '200'
+              newvalue: Repouso
+            -
+              value: '300'
+              newvalue: Descarregando
+        -
+          uuid: cf360ccf14cb481798e798f924bb622f
+          name: CondicaoDasBaterias
+          mappings:
+            -
+              value: '0'
+              newvalue: Boa
+            -
+              value: '100'
+              newvalue: Fraca
+            -
+              value: '200'
+              newvalue: Ruim
+        -
+          uuid: 80558a55a12a49fe95d1adfb626a33dc
+          name: EstadoDaBateria
+          mappings:
+            -
+              value: '0'
+              newvalue: Normal
+            -
+              value: '100'
+              newvalue: Baixa
+            -
+              value: '200'
+              newvalue: Esgotada
+        -
+          uuid: 11421913424341be89a8d1dbe3a99bc8
+          name: FasesDeEntrada
+          mappings:
+            -
+              value: '0'
+              newvalue: 'Queda total'
+            -
+              value: '1'
+              newvalue: 'Queda de Duas Fases'
+            -
+              value: '2'
+              newvalue: 'Queda de Uma fase'
+            -
+              value: '3'
+              newvalue: 'Fases Normais'
+        -
+          uuid: df68951a07154407a5da7a78cf51a374
+          name: FasesDeEntradaProb
+          mappings:
+            -
+              value: '0'
+              newvalue: 'Num Fases Down'
+            -
+              value: '1'
+              newvalue: 'Num Fases Down'
+            -
+              value: '2'
+              newvalue: 'Num Fases Down'
+            -
+              value: '3'
+              newvalue: 'Num Fases Down'
+        -
+          uuid: cd8ab81a99d54267817502a9d3534f9e
+          name: ModoOperacaoUPS
+          mappings:
+            -
+              value: '0'
+              newvalue: Normal
+            -
+              value: '100'
+              newvalue: 'Modo Bateria'
+            -
+              value: '200'
+              newvalue: 'Modo ByPass'
+            -
+              value: '300'
+              newvalue: 'Modo Reduzido'
+            -
+              value: '400'
+              newvalue: 'Modo Impulso'
+            -
+              value: '500'
+              newvalue: Outros
+        -
+          uuid: 70d030ae835940b498d1f2d2b35283df
+          name: ResultadoTesteUPS
+          mappings:
+            -
+              value: '0'
+              newvalue: 'Sem Teste'
+            -
+              value: '100'
+              newvalue: 'Teste OK'
+            -
+              value: '200'
+              newvalue: 'Teste em Progresso'
+            -
+              value: '300'
+              newvalue: 'Falha no Teste Geral'
+            -
+              value: '400'
+              newvalue: 'Falha no Teste das Baterias'
+            -
+              value: '500'
+              newvalue: 'Falha no teste de Descarga das Baterias'
+  triggers:
+    -
+      uuid: 46131d77a7f84f8c8e429996b717c7e4
+      expression: 'last(/UPS_CMComandos/upsNumLinhasEntradasProb)=0 and last(/UPS_CMComandos/upsModoDeFuncionamento)=0'
+      name: 'Energia normalizada no DC'
+      priority: INFO
+    -
+      uuid: ce7286f4526149b9b2d2915001ed1720
+      expression: 'last(/UPS_CMComandos/upsNumLinhasEntradasProb)<>1 and last(/UPS_CMComandos/upsModoDeFuncionamento)<>1'
+      name: 'Falta de Energia no DC'
+      priority: AVERAGE
