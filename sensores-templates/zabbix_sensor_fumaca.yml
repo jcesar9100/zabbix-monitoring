@@ -1,0 +1,185 @@
+zabbix_export:
+  version: '6.0'
+  date: '2025-01-16T14:18:06Z'
+  groups:
+    -
+      uuid: 82b2354bb9df401a9708afa28e04101b
+      name: Termometro
+  templates:
+    -
+      uuid: 0887647c714d4fbaa5DF0250ca530020a
+      template: fumaca
+      name: 'Detector de Fumaça'
+      groups:
+        -
+          name: Termometro
+      items:
+        -
+          uuid: d20c0d324b294f909a0fae76a4a6041c
+          name: 'Fumaca - DF01'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.1'
+          key: 'fumaca.alerta[DF01]'
+          delay: 20s
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: b0e4b3da032947e4a04e96a5ca1ef3f3
+              expression: 'last(/fumaca/fumaca.alerta[DF01])<=500'
+              name: 'Fumaca detectada - DF01'
+              event_name: 'Fumaca detectada - DF01'
+              priority: HIGH
+        -
+          uuid: b377e05e60e64c54a89cdec7a70c9ed2
+          name: 'Fumaca  - DF02'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.3'
+          key: 'fumaca.alerta[DF02]'
+          delay: 20s
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: c8c50559290b4094bc94272665df39f1
+              expression: 'last(/fumaca/fumaca.alerta[DF02])<=500'
+              name: 'Fumaca detectada - DF02'
+              event_name: 'Fumaca detectada - DF02'
+              priority: HIGH
+        -
+          uuid: 2c90b0f9c44f4922834d4748a9c1f5fb
+          name: 'Fumaca  - DF03'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.8'
+          key: 'fumaca.alerta[DF03]'
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: 8e1af56617c443f69f98b25023b1370f
+              expression: 'last(/fumaca/fumaca.alerta[DF03])<=500'
+              name: 'Fumaca detectada - DF03'
+              event_name: 'Fumaca detectada - DF03'
+              priority: HIGH
+        -
+          uuid: 4bc14b522ced4bfb9633731f7235896d
+          name: 'Fumaca  - DF04'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.2'
+          key: 'fumaca.alerta[DF04]'
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: 268a1c7497a7435c939d8ceea3ea82ea
+              expression: 'last(/fumaca/fumaca.alerta[DF04])<=500'
+              name: 'Fumaca detectada - DF04'
+              event_name: 'Fumaca detectada - DF04'
+              priority: HIGH
+        -
+          uuid: e1c3c1d6ee2348319bc1eaf6f5444e6d
+          name: 'Fumaca  - DF05'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.5'
+          key: 'fumaca.alerta[DF05]'
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: c0c35809097449f492b07137826a4148
+              expression: 'last(/fumaca/fumaca.alerta[DF05])<=500'
+              name: 'Fumaca detectada - DF05'
+              event_name: 'Fumaca detectada - DF05'
+              priority: HIGH
+        -
+          uuid: fbbba438d0b24a618fb2a8e5278a991d
+          name: 'Fumaca  - DF06'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.4'
+          key: 'fumaca.alerta[DF06]'
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: 9dc1186cf0a54e7d9a936ae0163b9921
+              expression: 'last(/fumaca/fumaca.alerta[DF06])<=500'
+              name: 'Fumaca detectada - DF06'
+              event_name: 'Fumaca detectada - DF06'
+              priority: HIGH
+        -
+          uuid: 22f52328a2244c6fa5315a84b07377cf
+          name: 'Fumaca  - DF07'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.10'
+          key: 'fumaca.alerta[DF07]'
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: 96fb77f2c7c74a5b9b18d224fed87913
+              expression: 'last(/fumaca/fumaca.alerta[DF07])<=500'
+              name: 'Fumaca detectada - DF07'
+              event_name: 'Fumaca detectada - DF07'
+              priority: HIGH
+        -
+          uuid: 033f8326d65e436690c51133fe818443
+          name: 'Fumaca  - DF08'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.9'
+          key: 'fumaca.alerta[DF08]'
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: 885c5605340e48d1b5848b8030ab1dd7
+              expression: 'last(/fumaca/fumaca.alerta[DF08])<=500'
+              name: 'Fumaca detectada - DF08'
+              event_name: 'Fumaca detectada - DF08'
+              priority: HIGH
+        -
+          uuid: b998ed8f7073478cb03ed8d3c0c35968
+          name: 'Fumaca  - DF09'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.7'
+          key: 'fumaca.alerta[DF09]'
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: 47a32fda73144999a1a727d5f837f360
+              expression: 'last(/fumaca/fumaca.alerta[DF09])<=1500'
+              name: 'Fumaca detectada - TDF09'
+              event_name: 'Fumaca detectada - DF09'
+              priority: HIGH
+        -
+          uuid: ee192bf2f359442499478b84231002e3
+          name: 'Fumaca  - DF10'
+          type: SNMP_AGENT
+          snmp_oid: 'SNMPv2-SMI::enterprises.8.6'
+          key: 'fumaca.alerta[DF10]'
+          value_type: FLOAT
+          units: OP
+          triggers:
+            -
+              uuid: 960da14dc5fe489cb31e6a32cbc9d18d
+              expression: 'last(/fumaca/fumaca.alerta[DF10])<=700'
+              name: 'Fumaca detectada - DF10'
+              event_name: 'Fumaca detectada - DF10'
+              priority: HIGH
+      tags:
+        -
+          tag: SMT
+          value: SNMP
+      macros:
+        -
+          macro: '{$AGENT.TIMEOUT}'
+          value: 3m
+        -
+          macro: '{$CPU.UTIL.CRIT}'
+          value: '90'
+        -
+          macro: '{$IF.ERRORS.WARN}'
+          value: '2'
+        -
+          macro: '{$IFCONTROL}'
+          value: '1'
