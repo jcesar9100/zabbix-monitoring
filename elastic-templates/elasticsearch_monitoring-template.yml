@@ -1,0 +1,58 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 9a1fb38fd6554e8bb5290c29dfea71b9
+      name: RSDC
+  templates:
+    - uuid: 48d8f1649f954ad8b7c0990d2449fb68
+      template: 'Elasticsearch Monitoring'
+      name: 'Elasticsearch Monitoring'
+      description: 'Template para monitoramento de shards'
+      groups:
+        - name: RSDC
+      items:
+        - uuid: fb7e9fc612f048bcbbe9ddb7ee1373f6
+          name: 'Elasticsearch Document Count'
+          key: elasticsearch.docs.count
+        - uuid: 4448adf4806741bdbe939630d278690a
+          name: 'Elasticsearch Cluster Health'
+          key: elasticsearch.health
+          value_type: TEXT
+          trends: '0'
+          triggers:
+            - uuid: d328135d3b844923a9846b12052c5f90
+              expression: 'ascii(last(/Elasticsearch Monitoring/elasticsearch.health))<>"green"'
+              name: 'Elasticsearch Cluster Health is not green'
+              priority: HIGH
+        - uuid: a95f5c34232841f1a8c5fe2eeb198b44
+          name: 'Elasticsearch Indices Count'
+          key: elasticsearch.indices.count
+        - uuid: 9a7c431218c34bbbaf00d28b8b5dca3a
+          name: 'Elasticsearch Node Count'
+          key: elasticsearch.nodes.count
+          triggers:
+            - uuid: f7291188b7c545148a5cef3b249fee31
+              expression: 'last(/Elasticsearch Monitoring/elasticsearch.nodes.count)<3'
+              name: 'Elasticsearch Node Count is less than 3'
+              priority: WARNING
+  graphs:
+    - uuid: bdd61d1bccd54a2ea9d520a8f4ddf75e
+      name: 'Document Count e Node Count.'
+      graph_items:
+        - color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: 'Elasticsearch Monitoring'
+            key: elasticsearch.docs.count
+        - sortorder: '1'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: 'Elasticsearch Monitoring'
+            key: elasticsearch.indices.count
+        - sortorder: '2'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: 'Elasticsearch Monitoring'
+            key: elasticsearch.nodes.count

@@ -1,0 +1,50 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 9a1fb38fd6554e8bb5290c29dfea71b9
+      name: RSDC
+  templates:
+    - uuid: a5f43134bb4e44f9a2f5048b888a02e2
+      template: 'Template Elasticsearch 8.15'
+      name: 'Elasticsearch 8.15'
+      groups:
+        - name: RSDC
+      items:
+        - uuid: 0f3487af2f354e11835264d3fedf41b9
+          name: 'Saúde do Cluster'
+          type: HTTP_AGENT
+          key: cluster.health
+          value_type: TEXT
+          trends: '0'
+          authtype: BASIC
+          username: '{$ELASTICSEARCH.USERNAME}'
+          password: '{$ELASTICSEARCH.PASSWORD}'
+          url: 'http://<IP_do_Elasticsearch>:9200/_cluster/health'
+          triggers:
+            - uuid: e970c38bbcde41da9f4bf5bfcb71c13f
+              expression: 'last(/Template Elasticsearch 8.15/cluster.health)=0'
+              name: 'Elasticsearch Cluster Health is Red'
+              priority: HIGH
+        - uuid: 1db53b6af32345598e6c24656d73b62d
+          name: 'Número de nós no cluster'
+          type: HTTP_AGENT
+          key: cluster.nodes.count
+          url: 'http://<IP_do_Elasticsearch>:9200/_cluster/stats'
+        - uuid: ce4ce564b3794b4fa4ca4b71819e7efb
+          name: 'Tamanho total de índices'
+          type: HTTP_AGENT
+          key: indices.size
+          value_type: FLOAT
+          url: 'http://<IP_do_Elasticsearch>:9200/_cluster/stats'
+        - uuid: b32b981297fb4ff8a8afb4ff77b9fcf7
+          name: 'Estatísticas de nós'
+          type: HTTP_AGENT
+          key: nodes.cpu.usage
+          value_type: FLOAT
+          url: 'http://<IP_do_Elasticsearch>:9200/_nodes/stats'
+          posts: 'JSONPath: $.nodes.*.os.cpu.percent'
+          triggers:
+            - uuid: 56daf162ff3d4438ab70dd8e3e5af371
+              expression: 'last(/Template Elasticsearch 8.15/nodes.cpu.usage)>80'
+              name: 'Node CPU usage is over 80%'
+              priority: AVERAGE
